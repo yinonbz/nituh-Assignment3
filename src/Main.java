@@ -100,11 +100,28 @@ public class Main {
 
         Model testingModel4 = new Model();
 
-        Hotel testHotel = new Hotel("Rehovot", "Mulan Rooze", 2);
-        CommunityService serviceTest = new CommunityService("Pool");
-        HotelService testHotelService3 = new HotelService(50, 5);
-        Review testReview = new Review(4, "Lovely", new Date());
 
+
+        Hotel testHotel = new Hotel("Rehovot", "Mulan Rooze", 6);
+        Review testReview = new Review(7, "Lovely", new Date());
+
+        testingModel4.create_link_hotel_room(testRoom4, testHotel);
+        testingModel4.create_link_room_Booking(testRoom4, testBookin);
+        testingModel4.create_link_booking_review(testBookin, testReview);
+
+        testingModel4.addObjectToModel(testHotel);
+        testingModel4.addObjectToModel(testReview);
+        testingModel4.addObjectToModel(testRoom4);
+        testingModel4.addObjectToModel(testBookin);
+
+        System.out.println(testingModel4.checkModelConstraints());
+
+        // CommunityService serviceTest = new CommunityService("Pool");
+        //HotelService testHotelService3 = new HotelService(50, 5);
+
+
+
+        /*
         testingModel4.create_link_hotel_service_hotelService(testHotel, serviceTest, testHotelService3);
         testingModel4.create_link_hotelService_booking(testHotelService3, testBookin);
         testingModel4.create_link_booking_review(testBookin, testReview);
@@ -116,7 +133,7 @@ public class Main {
         testingModel4.addObjectToModel(testBookin);
 
         System.out.println(testingModel4.checkModelConstraints());
-
+        */
 
         System.out.println("------------------------------------------------------------- TESTING CONSTRAINT NR. 12 -------------------------------------------------------------");
 
