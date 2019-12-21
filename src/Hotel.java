@@ -1,5 +1,9 @@
+import com.sun.jmx.snmp.ServiceName;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public class Hotel implements ITestable {
@@ -71,25 +75,26 @@ public class Hotel implements ITestable {
             boolean beenToVIP = false;
             if (entry.getValue().getReservations().size() >= 5) {
                 for (Reservation tempReservation : entry.getValue().getReservations()) {
-                    if (tempReservation.getRoomCategory().getType().equals("VIP")) { //todo: check later how to compare between enum 'RoomType'
+                    if (tempReservation.getRoomCategory().getType() == RoomCategory.RoomType.VIP) {
                         beenToVIP = true;
                         break;
                     }
                 }
-                if(!beenToVIP){
+                if (!beenToVIP) {
                     return false;
                 }
             }
         }
         return true;
-        //----END OF CONSTRAINT 2----
-
-
+        //----END OF CONSTRAINT NR. 2----
 
 
     }
 
     public static boolean checkAllIntancesConstraints(Model model) {
+
+
+
         return true;
     }
 }
