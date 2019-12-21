@@ -1,37 +1,37 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
-public class Hotel implements  ITestable{
+public class Hotel implements ITestable {
     private String name;
     private HashMap<Client, ReservationSet> allReservation;
     private HashMap<Service, HotelService> services;
-    private HashMap<Integer,Room> rooms;
+    private HashMap<Integer, Room> rooms;
     private String city;
     private Group group;
     private int rate;
 
 
-
-    public Hotel(String city, String name,int rate){
+    public Hotel(String city, String name, int rate) {
         this.city = city;
         this.name = name;
         this.rate = rate;
-        rooms = new HashMap<Integer,Room>();
+        rooms = new HashMap<Integer, Room>();
         allReservation = new HashMap<Client, ReservationSet>();
         services = new HashMap<Service, HotelService>();
 
     }
 
-    public void addReservationSet(Client client,ReservationSet reservationSet){
-        allReservation.put(client,reservationSet);
+    public void addReservationSet(Client client, ReservationSet reservationSet) {
+        allReservation.put(client, reservationSet);
     }
 
-    public void addService(Service service, HotelService hotelService){
-        services.put(service,hotelService);
+    public void addService(Service service, HotelService hotelService) {
+        services.put(service, hotelService);
     }
 
-    public void addRoom(int roomNumber, Room room){
-        rooms.put(roomNumber,room);
+    public void addRoom(int roomNumber, Room room) {
+        rooms.put(roomNumber, room);
     }
 
 
@@ -51,20 +51,45 @@ public class Hotel implements  ITestable{
         return city;
     }
 
-    public HashMap<Client, ReservationSet> getAllReservation(){return allReservation;}
+    public HashMap<Client, ReservationSet> getAllReservation() {
+        return allReservation;
+    }
 
-    public HashMap<Service, HotelService> getServices(){
+    public HashMap<Service, HotelService> getServices() {
         return services;
     }
 
-    public int getRate(){return rate;}
+    public int getRate() {
+        return rate;
+    }
 
     @Override
     public boolean checkConstraints() {
+
+        //-----CONSTRAINT NR. 2----
+        for (Map.Entry<Client, ReservationSet> entry : allReservation.entrySet()) {
+            boolean beenToVIP = false;
+            if (entry.getValue().getReservations().size() >= 5) {
+                for (Reservation tempReservation : entry.getValue().getReservations()) {
+                    if (tempReservation.getRoomCategory().getType().equals("VIP")) { //todo: check later how to compare between enum 'RoomType'
+                        beenToVIP = true;
+                        break;
+                    }
+                }
+                if(!beenToVIP){
+                    return false;
+                }
+            }
+        }
         return true;
+        //----END OF CONSTRAINT 2----
+
+
+
+
     }
 
-    public static boolean checkAllIntancesConstraints(Model model){
+    public static boolean checkAllIntancesConstraints(Model model) {
         return true;
     }
 }
