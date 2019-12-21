@@ -1,10 +1,7 @@
 import com.sun.jmx.snmp.ServiceName;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 public class Hotel implements ITestable {
     private String name;
@@ -85,14 +82,55 @@ public class Hotel implements ITestable {
                 }
             }
         }
-        return true;
+
         //----END OF CONSTRAINT NR. 2----
 
 
+        //-------CONSTRAINT NR. 6-------
+        double countRooms = 0;
+        int vipRooms = 0;
+        for (Map.Entry<Integer, Room> entry : rooms.entrySet()) {
+            Room tempRoom = entry.getValue();
+            countRooms++;
+            if(tempRoom.getRoomCategory() != null){
+                if(tempRoom.getRoomCategory().getType() == RoomCategory.RoomType.VIP){
+                    vipRooms++;
+                }
+            }
+        }
+        countRooms = countRooms / 10;
+        int countRoomsRoundNumber = (int)countRooms;
+        if(vipRooms > countRoomsRoundNumber){
+            return false;
+        }
+
+        //------END OF CONSTRAINT NR. 6------
+
+
+        //------CONSTRAINT NR. 10------
+
+        if (rate >= 5) {
+            int numOfReviews = 0;
+            int countRanksOfReviews = 0;
+            for (Map.Entry<Integer, Room> entry : rooms.entrySet()) {
+                for (Map.Entry<Date, Booking> tempBooking : entry.getValue().getBookings().entrySet()) {
+                    if (tempBooking.getValue().getReview() != null) {
+                        numOfReviews++;
+                        countRanksOfReviews = countRanksOfReviews + tempBooking.getValue().getReview().getRank();
+                    }
+                }
+            }
+            if (((double) countRanksOfReviews / numOfReviews) <= 7.5) {
+                return false;
+            }
+        }
+
+        //------END OF CONSTRAINT 10------
+
+        return true;
     }
 
     public static boolean checkAllIntancesConstraints(Model model) {
-
 
 
         return true;

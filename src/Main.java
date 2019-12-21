@@ -53,6 +53,80 @@ public class Main {
         testingModel.addObjectToModel(testHotelService2);
 
         System.out.println(testingModel2.checkModelConstraints());
+
+        //-------------------END OF TESTING CONSTRAINT NR. 4--------------------
+        System.out.println("------------------------------------------------------------- TESTING CONSTRAINT NR. 6 -------------------------------------------------------------");
+
+        Room testRoom = new Room(45);
+        Room testRoom2 = new Room(30);
+        Room testRoom3 = new Room(50);
+        RoomCategory testRoomCategory = new RoomCategory(45, RoomCategory.RoomType.VIP);
+        RoomCategory testRoomCategory2 = new RoomCategory(45, RoomCategory.RoomType.BASIC);
+        RoomCategory testRoomCategory3 = new RoomCategory(45, RoomCategory.RoomType.BASIC);
+
+        testingModel.create_link_room_roomCategory(testRoom, testRoomCategory);
+        testingModel.create_link_room_roomCategory(testRoom2, testRoomCategory2);
+        testingModel.create_link_room_roomCategory(testRoom3, testRoomCategory3);
+
+        testingModel.create_link_hotel_room(testRoom, testingHotel);
+        testingModel.create_link_hotel_room(testRoom2, testingHotel);
+        testingModel.create_link_hotel_room(testRoom3, testingHotel);
+
+
+        System.out.println(testingModel.checkModelConstraints());
+
+        System.out.println("------------------------------------------------------------- TESTING CONSTRAINT NR. 8 -------------------------------------------------------------");
+
+        Model testingModel3 = new Model();
+        ReservationSet testingReservation = new ReservationSet();
+        Reservation testReservation = new Reservation(new Date(), new Date(), 54);
+        testingModel3.create_link_reservation_roomCategory(testReservation, new RoomCategory(45, RoomCategory.RoomType.SUITE));
+        testingModel3.create_link_reservationSet_reservation(testingReservation, testReservation);
+
+        Room testRoom4 = new Room(50);
+        testingModel3.create_link_room_roomCategory(testRoom4, new RoomCategory(50, RoomCategory.RoomType.SUITE));
+        Booking testBookin = new Booking(new Date(), testRoom4);
+        testingModel3.create_link_reservation_booking(testBookin, testReservation);
+        testingModel3.create_link_room_Booking(testRoom4, testBookin);
+
+        testingModel3.addObjectToModel(testingReservation);
+        testingModel3.addObjectToModel(testReservation);
+        testingModel3.addObjectToModel(testRoom4);
+        testingModel3.addObjectToModel(testBookin);
+
+        System.out.println(testingModel3.checkModelConstraints());
+
+        System.out.println("------------------------------------------------------------- TESTING CONSTRAINT NR. 10 -------------------------------------------------------------");
+
+        Model testingModel4 = new Model();
+
+        Hotel testHotel = new Hotel("Rehovot", "Mulan Rooze", 2);
+        CommunityService serviceTest = new CommunityService("Pool");
+        HotelService testHotelService3 = new HotelService(50, 5);
+        Review testReview = new Review(4, "Lovely", new Date());
+
+        testingModel4.create_link_hotel_service_hotelService(testHotel, serviceTest, testHotelService3);
+        testingModel4.create_link_hotelService_booking(testHotelService3, testBookin);
+        testingModel4.create_link_booking_review(testBookin, testReview);
+
+        testingModel4.addObjectToModel(testHotel);
+        testingModel4.addObjectToModel(serviceTest);
+        testingModel4.addObjectToModel(testHotelService3);
+        testingModel4.addObjectToModel(testReview);
+        testingModel4.addObjectToModel(testBookin);
+
+        System.out.println(testingModel4.checkModelConstraints());
+
+
+        System.out.println("------------------------------------------------------------- TESTING CONSTRAINT NR. 12 -------------------------------------------------------------");
+
+        /*
+        Date testDet = new Date(Model.getDateFromString("20-12-2019"));
+        Date testDate = new Date();
+        Date.
+        */
+
+
     }
 
 }
