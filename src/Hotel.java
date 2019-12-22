@@ -109,7 +109,7 @@ public class Hotel implements ITestable {
 
         //------CONSTRAINT NR. 10------
 
-        if (rate >= 5) {
+        if (rate == 5) {
             int numOfReviews = 0;
             int countRanksOfReviews = 0;
             for (Map.Entry<Integer, Room> entry : rooms.entrySet()) {
@@ -131,6 +131,32 @@ public class Hotel implements ITestable {
     }
 
     public static boolean checkAllIntancesConstraints(Model model) {
+
+        //------CONSTRAINT NR. 10------
+        int numOfHotelsWithRateFive = 0;
+        int numOfReviews = 0;
+        int countRanksOfReviews = 0;
+        for(Object obj : model.allObjects) {
+            if(obj instanceof Hotel){
+                Hotel hotelObj = (Hotel)obj;
+                if (hotelObj.rate == 5) {
+                    numOfHotelsWithRateFive++;
+                    for (Map.Entry<Integer, Room> entry : hotelObj.rooms.entrySet()) {
+                        for (Map.Entry<Date, Booking> tempBooking : entry.getValue().getBookings().entrySet()) {
+                            if (tempBooking.getValue().getReview() != null) {
+                                numOfReviews++;
+                                countRanksOfReviews = countRanksOfReviews + tempBooking.getValue().getReview().getRank();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (((double) countRanksOfReviews / numOfReviews) <= 7.5 && numOfHotelsWithRateFive > 0) {
+            return false;
+        }
+
+        //------END OF CONSTRAINT NR. 10------
 
 
         return true;
