@@ -92,15 +92,15 @@ public class Hotel implements ITestable {
         for (Map.Entry<Integer, Room> entry : rooms.entrySet()) {
             Room tempRoom = entry.getValue();
             countRooms++;
-            if(tempRoom.getRoomCategory() != null){
-                if(tempRoom.getRoomCategory().getType() == RoomCategory.RoomType.VIP){
+            if (tempRoom.getRoomCategory() != null) {
+                if (tempRoom.getRoomCategory().getType() == RoomCategory.RoomType.VIP) {
                     vipRooms++;
                 }
             }
         }
         countRooms = countRooms / 10;
-        int countRoomsRoundNumber = (int)countRooms;
-        if(vipRooms > countRoomsRoundNumber){
+        int countRoomsRoundNumber = (int) countRooms;
+        if (vipRooms > countRoomsRoundNumber) {
             return false;
         }
 
@@ -136,9 +136,9 @@ public class Hotel implements ITestable {
         int numOfHotelsWithRateFive = 0;
         int numOfReviews = 0;
         int countRanksOfReviews = 0;
-        for(Object obj : model.allObjects) {
-            if(obj instanceof Hotel){
-                Hotel hotelObj = (Hotel)obj;
+        for (Object obj : model.allObjects) {
+            if (obj instanceof Hotel) {
+                Hotel hotelObj = (Hotel) obj;
                 if (hotelObj.rate == 5) {
                     numOfHotelsWithRateFive++;
                     for (Map.Entry<Integer, Room> entry : hotelObj.rooms.entrySet()) {
@@ -152,10 +152,11 @@ public class Hotel implements ITestable {
                 }
             }
         }
-        if (((double) countRanksOfReviews / numOfReviews) <= 7.5 && numOfHotelsWithRateFive > 0) {
-            return false;
+        if (numOfHotelsWithRateFive > 0) {
+            if (((double) countRanksOfReviews / numOfReviews) <= 7.5) {
+                return false;
+            }
         }
-
         //------END OF CONSTRAINT NR. 10------
 
 
