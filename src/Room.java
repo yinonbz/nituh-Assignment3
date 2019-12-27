@@ -39,6 +39,7 @@ public class Room implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
+
         return true;
     }
 
