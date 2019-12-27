@@ -1,16 +1,17 @@
 import java.util.*;
 
-public class Group implements ITestable {
+public class Group implements  ITestable{
     private int groupId;
     HashSet<Hotel> hotels;
 
-    public Group(int id) {
+    public Group(int id){
         hotels = new HashSet<Hotel>();
         groupId = id;
     }
 
 
-    public void addHotelToGroup(Hotel hotel) {
+
+    public void addHotelToGroup(Hotel hotel){
         hotels.add(hotel);
     }
 
@@ -53,15 +54,10 @@ public class Group implements ITestable {
             }
         }
 
-
         //---------END OF CONSTRAINT NR. 4-------------
-
         return true;
     }
-
-    public static boolean checkAllIntancesConstraints(Model model) {
-
-
+    public static boolean checkAllIntancesConstraints(Model model){
         return true;
     }
 }

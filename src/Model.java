@@ -93,6 +93,8 @@ public class Model {
             return false;
         if(Reservation.checkAllIntancesConstraints(this) == false)
             return false;
+        if(ReservationSet.checkAllIntancesConstraints(this) == false)
+            return false;
         if(Review.checkAllIntancesConstraints(this) == false)
             return false;
         if(Room.checkAllIntancesConstraints(this) == false)

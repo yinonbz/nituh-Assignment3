@@ -1,38 +1,36 @@
-import com.sun.jmx.snmp.ServiceName;
-
-import java.lang.reflect.Array;
 import java.util.*;
 
-public class Hotel implements ITestable {
+public class Hotel implements  ITestable{
     private String name;
     private HashMap<Client, ReservationSet> allReservation;
     private HashMap<Service, HotelService> services;
-    private HashMap<Integer, Room> rooms;
+    private HashMap<Integer,Room> rooms;
     private String city;
     private Group group;
     private int rate;
 
 
-    public Hotel(String city, String name, int rate) {
+
+    public Hotel(String city, String name,int rate){
         this.city = city;
         this.name = name;
         this.rate = rate;
-        rooms = new HashMap<Integer, Room>();
+        rooms = new HashMap<Integer,Room>();
         allReservation = new HashMap<Client, ReservationSet>();
         services = new HashMap<Service, HotelService>();
 
     }
 
-    public void addReservationSet(Client client, ReservationSet reservationSet) {
-        allReservation.put(client, reservationSet);
+    public void addReservationSet(Client client,ReservationSet reservationSet){
+        allReservation.put(client,reservationSet);
     }
 
-    public void addService(Service service, HotelService hotelService) {
-        services.put(service, hotelService);
+    public void addService(Service service, HotelService hotelService){
+        services.put(service,hotelService);
     }
 
-    public void addRoom(int roomNumber, Room room) {
-        rooms.put(roomNumber, room);
+    public void addRoom(int roomNumber, Room room){
+        rooms.put(roomNumber,room);
     }
 
 
@@ -52,17 +50,14 @@ public class Hotel implements ITestable {
         return city;
     }
 
-    public HashMap<Client, ReservationSet> getAllReservation() {
-        return allReservation;
-    }
+    public HashMap<Client, ReservationSet> getAllReservation(){return allReservation;}
 
-    public HashMap<Service, HotelService> getServices() {
+    public HashMap<Service, HotelService> getServices(){
         return services;
     }
 
-    public int getRate() {
-        return rate;
-    }
+    public int getRate(){return rate;}
+
 
     @Override
     public boolean checkConstraints() {
@@ -127,10 +122,43 @@ public class Hotel implements ITestable {
 
         //------END OF CONSTRAINT 10------
 
+        //saaif 11
+        Set<String> name = new HashSet<>();
+        for(Service service: services.keySet()){
+            if(!name.contains(service.getServiceName())){
+                name.add(service.getServiceName());
+            }
+            else{
+                return false;
+            }
+        }
+
         return true;
     }
 
-    public static boolean checkAllIntancesConstraints(Model model) {
+    public static boolean checkAllIntancesConstraints(Model model){
+
+        // saaif 1
+        Map<String,Integer> cities = new HashMap<>();
+        for(Object o: model.allObjects){
+            if(o instanceof Group){
+                Group group = (Group) o;
+                for(Hotel hotel: group.getHotels()){
+                    if(cities.containsKey(hotel.getCity())){
+                        cities.put(hotel.getCity(),cities.remove(hotel.getCity())+1);
+                    }
+                    else{
+                        cities.put(hotel.getCity(),1);
+                    }
+                }
+                for(Map.Entry<String,Integer> me:cities.entrySet()){
+                    if(me.getValue()>1){
+                        return false;
+                    }
+                }
+                cities.clear();
+            }
+        }
 
         //------CONSTRAINT NR. 10------
         int numOfHotelsWithRateFive = 0;
@@ -158,7 +186,6 @@ public class Hotel implements ITestable {
             }
         }
         //------END OF CONSTRAINT NR. 10------
-
 
         return true;
     }

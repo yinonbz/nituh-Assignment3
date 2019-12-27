@@ -1,4 +1,4 @@
-public class VipService extends Service{
+public class  VipService extends Service{
 
     public VipService(String serviceName) {
         super(serviceName);

@@ -1,19 +1,19 @@
 import java.util.ArrayList;
 
-public class ReservationSet implements ITestable {
+public class ReservationSet implements  ITestable{
     private Client client;
     private Hotel hotel;
     private ArrayList<Reservation> reservations;
 
-    public ReservationSet() {
+    public ReservationSet(){
         reservations = new ArrayList<Reservation>();
     }
 
-    public void setClient(Client client) {
+    public void setClient(Client client){
         this.client = client;
     }
 
-    public void setHotel(Hotel hotel) {
+    public void setHotel(Hotel hotel){
         this.hotel = hotel;
     }
 
@@ -36,6 +36,12 @@ public class ReservationSet implements ITestable {
 
     @Override
     public boolean checkConstraints() {
+        //saaif 7
+        if(hotel.getCity().equalsIgnoreCase("LAS VEGAS")){
+            if(client.getAge()<21){
+                return false;
+            }
+        }
 
         //------CONSTRAINT NR. 8------
 
@@ -58,10 +64,30 @@ public class ReservationSet implements ITestable {
 
         //------END OF CONSTRAINT NR. 8------
 
+
         return true;
     }
 
-    public static boolean checkAllIntancesConstraints(Model model) {
+    public static boolean checkAllIntancesConstraints(Model model){
+        //saaif 3
+        for(Object o:model.allObjects){
+            if(o instanceof ReservationSet){
+                ReservationSet oRs = (ReservationSet)o;
+                Hotel hotel = oRs.getHotel();
+                if(!hotel.getAllReservation().containsValue(oRs)){
+                    return false;
+                }
+                for(Object ob:model.allObjects){
+                    if(ob instanceof Hotel){
+                        Hotel hotelOb = (Hotel)ob;
+                        if(!hotelOb.equals(hotel) && hotelOb.getAllReservation().containsValue(oRs)){
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
         return true;
     }
 }
